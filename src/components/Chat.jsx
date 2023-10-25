@@ -1,10 +1,12 @@
- import React from 'react'
- import { PiDotsThreeVerticalLight } from 'react-icons/pi'
+import React from 'react'
+import { PiDotsThreeVerticalLight } from 'react-icons/pi'
+import Messages from './Messages'
+import Input from './Input'
  
- export const Chat = () => {
-   return (
-     <div className='w-2/3 bg-neutral-100'>
-      <div>
+export const Chat = () => {
+  return (
+    <div className='w-2/3 bg-neutral-100'>
+      <div className='grid grid-rows-[auto,1fr,auto] h-full'>
         <div className='flex flex-row items-center p-4 justify-between'>
           <div className='flex justify-center items-center pb-2'>
             <img 
@@ -19,14 +21,12 @@
           </div>
           <PiDotsThreeVerticalLight className='text-black text-3xl cursor-pointer'/>
         </div>
-        <div className='flex flex-col items-center justify-center border-t-2 border-zinc-600 py-4 mx-12'>
-          <span className='text-neutral-500'>sem novas mensagens</span>
-        </div>
-
+        <Messages />
+        <Input />
       </div>
-     </div>
-   )
+    </div>
+  )
 
- }
- 
+}
+
 export default Chat
