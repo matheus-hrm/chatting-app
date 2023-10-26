@@ -1,13 +1,30 @@
 import React from 'react'
 import { CgProfile } from 'react-icons/cg'
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
 
 const Register = () => {
+
+  const handleSubmit = async (event) => {
+    const [err, setErr] = useState(false)
+
+    event.preventDefault()
+    const name = event.target[0].value
+    const email = event.target[1].value
+    const password = event.target[2].value
+    const avatar = event.target[3].files[0]
+    try {
+      const response = await createUserWithEmailAndPassword(auth, email, password)
+    }catch (err) {
+      setErr(true)
+    }
+  }
+
   return (
     <div className='bg-cyan-950 h-screen w-screen flex items-center justify-center'>
       <div className='flex flex-col gap-3 border border-12 rounded-xl bg-gray-100 py-5 px-28  items-center'>
         <h1 className='font-bold text-3xl  text-sky-800'>chatting</h1>
         <h2>cadastro</h2>
-        <form className='flex flex-col gap-4 p-6'>
+        <form onSubmit={handleSubmit} className='flex flex-col gap-4 p-6'>
           <input className='border-b-2 border-b-gray-400 p-4 bg-gray-100 focus:text-black' type='text' placeholder='seu nome'></input>
           <input className='border-b-2 border-b-gray-400 p-4 bg-gray-100' type='email' placeholder='seu email'></input>
           <input className='border-b-2 border-b-gray-400 p-4 bg-gray-100' type='password' placeholder='senha'></input>
