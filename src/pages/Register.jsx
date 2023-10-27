@@ -1,23 +1,57 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { CgProfile } from 'react-icons/cg'
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
+import { auth, storage, db } from '../firebase.js'
+import {  ref,  uploadBytesResumable,  getDownloadURL } from 'firebase/storage'
+import { doc, setDoc } from "firebase/firestore"; 
+import { useNavigate } from 'react-router-dom'
+
+
 
 const Register = () => {
-
+  const [err, setErr] = useState(false)
+  const navigate = useNavigate()
   const handleSubmit = async (event) => {
-    const [err, setErr] = useState(false)
-
+    
     event.preventDefault()
-    const name = event.target[0].value
+    const displayName = event.target[0].value
     const email = event.target[1].value
     const password = event.target[2].value
     const avatar = event.target[3].files[0]
+    
     try {
-      const response = await createUserWithEmailAndPassword(auth, email, password)
-    }catch (err) {
-      setErr(true)
+      const response = await createUserWithEmailAndPassword(auth, email, password);
+      
+      const storageRef = ref(storage, displayName);
+      
+      const uploadTask = uploadBytesResumable(storageRef, avatar);
+
+      uploadTask.on(  
+        (error) => {
+          setErr(true);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then( async (downloadURL) => {
+            await updateProfile(response.user,{
+              displayName,
+              photoURL: downloadURL
+            })
+            await setDoc(doc(db, "users", response.user.uid), {
+              uid: response.user.uid,
+              displayName,
+              email,
+              photoURL: downloadURL
+            });
+
+            await setDoc(doc(db, "userChats", response.user.uid), {})
+            navigate('/')
+          });
+        }
+      );
+    } catch (err) {
+      setErr(true);
     }
-  }
+  };
 
   return (
     <div className='bg-cyan-950 h-screen w-screen flex items-center justify-center'>
@@ -34,8 +68,9 @@ const Register = () => {
             faça upload do seu avatar
           </label>
           <button type='submit' className='cursor-pointer bg-teal-800 p-4 text-white rounded-lg '>cadastrar</button>
+          {err && <p className='text-red-500'>algo deu errado</p>}
         </form>
-        <p className=' text-sm t pt-4 text-gray-600' >Já possui uma conta ? Faça o login</p>
+        <p className=' text-sm t pt-4 text-gray-600' >Já possui uma conta ? Faça o <Link to="/login">login</Link></p>
       </div>
     </div>
   )
