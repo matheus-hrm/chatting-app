@@ -28,7 +28,7 @@ const Login = () => {
         <h1 className='font-bold text-3xl  text-sky-800'>chatting</h1>
           <h2>login</h2>
           <form onSubmit={handleSubmit} className='flex flex-col gap-4 p-6'>
-            <input className='border-b-2 border-b-gray-400 p-4 bg-gray-100 focus:text-black'type='text' placeholder='seu nome'></input>
+            <input className='border-b-2 border-b-gray-400 p-4 bg-gray-100 focus:text-black'type='text' placeholder='seu email'></input>
             <input className='border-b-2 border-b-gray-400 p-4 bg-gray-100 focus:text-black'type='password' placeholder='senha'></input>
             <button className='bg-emerald-500 p-4 rounded-lg text-white' type='submit'>entrar</button>
             {err && <p className='text-red-500'>algo deu errado</p>}
