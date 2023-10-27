@@ -14,6 +14,8 @@ const Login = () => {
     
     const email = event.target[0].value
     const password = event.target[1].value
+
+
     
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -22,7 +24,6 @@ const Login = () => {
       setErr(true);
     }
   };
-
 
 
   return (

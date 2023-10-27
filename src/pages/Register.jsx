@@ -9,47 +9,55 @@ import { useNavigate, Link } from 'react-router-dom'
 
 
 const Register = () => {
-  const [err, setErr] = useState(false)
-  const navigate = useNavigate()
-  const handleSubmit = async (event) => {
-    
-    event.preventDefault()
-    const displayName = event.target[0].value
-    const email = event.target[1].value
-    const password = event.target[2].value
-    const avatar = event.target[3].files[0]
-    
-    try {
-      const response = await createUserWithEmailAndPassword(auth, email, password);
-      
-      const storageRef = ref(storage, displayName);
-      
-      const uploadTask = uploadBytesResumable(storageRef, avatar);
+  const [err, setErr] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-      uploadTask.on(  
-        (error) => {
-          setErr(true);
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then( async (downloadURL) => {
-            await updateProfile(response.user,{
+  const handleSubmit = async (e) => {
+    setLoading(true);
+    e.preventDefault();
+    const displayName = e.target[0].value;
+    const email = e.target[1].value;
+    const password = e.target[2].value;
+    const file = e.target[3].files[0];
+
+    try {
+      //Create user
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+
+      //Create a unique image name
+      const date = new Date().getTime();
+      const storageRef = ref(storage, `${displayName + date}`);
+
+      await uploadBytesResumable(storageRef, file).then(() => {
+        getDownloadURL(storageRef).then(async (downloadURL) => {
+          try {
+            //Update profile
+            await updateProfile(res.user, {
               displayName,
-              photoURL: downloadURL
-            })
-            await setDoc(doc(db, "users", response.user.uid), {
-              uid: response.user.uid,
+              photoURL: downloadURL,
+            });
+            //create user on firestore
+            await setDoc(doc(db, "users", res.user.uid), {
+              uid: res.user.uid,
               displayName,
               email,
-              photoURL: downloadURL
+              photoURL: downloadURL,
             });
 
-            await setDoc(doc(db, "userChats", response.user.uid), {})
-            navigate('/')
-          });
-        }
-      );
+            //create empty user chats on firestore
+            await setDoc(doc(db, "userChats", res.user.uid), {});
+            navigate("/");
+          } catch (err) {
+            console.log(err);
+            setErr(true);
+            setLoading(false);
+          }
+        });
+      });
     } catch (err) {
       setErr(true);
+      setLoading(false);
     }
   };
 
