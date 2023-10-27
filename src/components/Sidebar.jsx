@@ -10,7 +10,6 @@ export const Sidebar = () => {
       <Search/>
       <Chats/>
     </div>
-    
   )
 }
 
