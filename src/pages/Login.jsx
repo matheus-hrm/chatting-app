@@ -31,12 +31,22 @@ const Login = () => {
         <h1 className='font-bold text-3xl  text-sky-800'>chatting</h1>
           <h2>login</h2>
           <form onSubmit={handleSubmit} className='flex flex-col gap-4 p-6'>
-            <input className='border-b-2 border-b-gray-400 p-4 bg-gray-100 focus:text-black'type='text' placeholder='seu email'></input>
-            <input className='border-b-2 border-b-gray-400 p-4 bg-gray-100 focus:text-black'type='password' placeholder='senha'></input>
+            <input 
+              className='border-b-2 border-b-gray-400 p-4 bg-gray-100 focus:text-black outline-none focus:border-b-neutral-950 transition duration-500 ease-in-out'
+              type='text' 
+              placeholder='seu email'
+            >  
+            </input>
+            <input 
+              className='border-b-2 border-b-gray-400 p-4 bg-gray-100 outline-none focus:text-black focus:border-b-neutral-950 transition duration-500 ease-in-out'
+              type='password' 
+              placeholder='senha'
+            >
+            </input>
             <button className='bg-emerald-500 p-4 rounded-lg text-white' type='submit'>entrar</button>
             {err && <p className='text-red-500'>algo deu errado</p>}
           </form>
-          <p className='text-sm text-gray-600 pt-4'>não tem uma conta ? faz o <Link to="/register">cadastro</Link></p>
+          <p className='text-sm text-gray-600 pt-4'>não tem uma conta ? faz o <Link to="/register" className="text-sky-600">cadastro</Link></p>
       </div>
     </div>
   )

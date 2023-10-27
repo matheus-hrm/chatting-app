@@ -59,9 +59,9 @@ const Register = () => {
         <h1 className='font-bold text-3xl  text-sky-800'>chatting</h1>
         <h2>cadastro</h2>
         <form onSubmit={handleSubmit} className='flex flex-col gap-4 p-6'>
-          <input className='border-b-2 border-b-gray-400 p-4 bg-gray-100 focus:text-black' type='text' placeholder='seu nome'></input>
-          <input className='border-b-2 border-b-gray-400 p-4 bg-gray-100' type='email' placeholder='seu email'></input>
-          <input className='border-b-2 border-b-gray-400 p-4 bg-gray-100' type='password' placeholder='senha'></input>
+          <input className='border-b-2 border-b-gray-400 p-4 bg-gray-100 focus:text-black outline-none focus:border-b-neutral-950 transition duration-500 ease-in-out' type='text' placeholder='seu nome'></input>
+          <input className='border-b-2 border-b-gray-400 p-4 bg-gray-100 outline-none focus:border-b-neutral-950 transition duration-500 ease-in-out' type='email' placeholder='seu email'></input>
+          <input className='border-b-2 border-b-gray-400 p-4 bg-gray-100 outline-none focus:border-b-neutral-950 transition duration-500 ease-in-out' type='password' placeholder='senha'></input>
           <input type='file' id='avatar' style={{display:'none'}}></input>
           <label htmlFor='avatar' className='cursor-pointer text-gray-600 text-sm'>
             <CgProfile className='inline-block px-2' size={40} />
@@ -70,7 +70,7 @@ const Register = () => {
           <button type='submit' className='cursor-pointer bg-teal-800 p-4 text-white rounded-lg '>cadastrar</button>
           {err && <p className='text-red-500'>algo deu errado</p>}
         </form>
-        <p className=' text-sm t pt-4 text-gray-600' >Já possui uma conta ? Faça o <Link to="/login">login</Link></p>
+        <p className=' text-sm t pt-4 text-gray-600' >já tem uma conta ? faz o <Link to="/login" className="text-sky-600">login</Link></p>
       </div>
     </div>
   )
