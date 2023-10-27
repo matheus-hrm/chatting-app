@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { CgProfile } from 'react-icons/cg'
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { auth, storage, db } from '../firebase.js'
-import {  ref,  uploadBytesResumable,  getDownloadURL } from 'firebase/storage'
+import { ref,  uploadBytesResumable,  getDownloadURL } from 'firebase/storage'
 import { doc, setDoc } from "firebase/firestore"; 
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 
 
