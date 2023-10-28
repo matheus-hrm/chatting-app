@@ -8,7 +8,7 @@ export const Chat = () => {
 
   const { data } = useContext(ChatContext)
 
-
+  
   return (
     <div className='w-2/3 bg-neutral-100'>
       <div className='grid grid-rows-[auto,1fr,auto] h-full'>
@@ -21,7 +21,7 @@ export const Chat = () => {
             />
             <div className='flex flex-col pl-4 justify-center'>
               <span className='text-black'>{data.user?.displayName}</span>
-              <span className='text-neutral-500'>{data.lastMessage?.text}</span>  
+              <span className='text-neutral-500'>{data.lastMessage}</span>  
             </div>
           </div>
           <PiDotsThreeVerticalLight className='text-black text-3xl cursor-pointer'/>

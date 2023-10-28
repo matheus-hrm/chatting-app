@@ -6,9 +6,11 @@ const Home = () => {
   
   return (
     <div className="flex items-center justify-center bg-cyan-950 h-screen">
-      <div className='border-2 border-black flex flex-row rounded-lg overflow-hidden' style={{width: '65%' , height: '80%'}}>
+      <div className='border-2 border-black flex flex-row rounded-lg overflow-hidden sm:h-screen sm:w-screen
+      ' style={{width: '65%' , height: '80%'}}>
         <Sidebar  />
         <Chat />
+        
       </div>
     </div>
   )

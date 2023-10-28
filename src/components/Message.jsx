@@ -1,24 +1,62 @@
 import React from 'react'
+import { useContext, useEffect, useState, useRef   } from 'react'
+import { AuthContext } from '../context/AuthContext'
+import { ChatContext } from '../context/ChatContext'
 
-export const Message = () => {
+//messages array is inside of 'chats' 
+
+const Message = ({ messages })  => {
+
+  const { currentUser } = useContext(AuthContext)
+  const { data } = useContext(ChatContext)
+  const ref = useRef()
+
+  useEffect(() => {
+    ref.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
+
+  
+
   return (
-    <div>
-      <div className='p-2 flex  flex-row items-center gap-x-4 mb-4'>
-        <img src='https://picsum.photos/200/300' alt="" className='h-10 w-10 rounded-full '/>
-        <span className='text-black bg-sky-200  p-2 rounded-lg' >usuário</span>
+    <div className={`message &{message.senderId === currentUser.uid && "owner"} `} >
+      <div  className={`p-2 flex flex-row items-center gap-x-4 mb-4 rounded-xl overflow-y-auto 
+      ${messages.senderId === currentUser.uid ? 'justify-end pr-10 bg-sky-200' : 'justify-start bg-neutral-200'}
+      `}
+      style={{ wordWrap: 'break-word' }}
+      
+      >
+        {messages.senderId === currentUser.uid ? 
+          (
+            <>
+            { messages.img && <img src={messages.img} alt="" className='w-40 h-40 rounded-xl'/>}
+              <div className='flex flex-col'>
+                <span className='text-violet-800 '>{messages.senderId === currentUser.uid ? currentUser.displayName : data.user.displayName}</span>
+                <span className='text-black'>{messages.text}</span>
+              </div>
+              <img 
+                src={messages.senderId === currentUser.uid ? currentUser.photoURL : data.user.photoURL}
+                alt="" 
+                className='w-10 h-10 rounded-full'
+              /> 
+            </>
+          ) : (
+            <>
+              <img 
+                src={messages.senderId === currentUser.uid ? currentUser.photoURL : data.user.photoURL}
+                alt="" 
+                className='w-10 h-10 rounded-full'
+              />
+              <div className='flex flex-col'>
+                <span className='text-violet-800 '>{messages.senderId === currentUser.uid ? currentUser.displayName : data.user.displayName}</span>
+                <span className='text-black'>{messages.text}</span>
+              </div>
+              { messages.img && <img src={messages.img} alt="" className='w-40 h-40 rounded-xl'/>}
+              </>
+            )
+          }
+          </div>
       </div>
-      <div className='p-2 flex  flex-row items-center gap-x-4 mb-3'>
-        <img src='https://picsum.photos/200/300' alt="" className='h-10 w-10 rounded-full '/>
-        <span className='text-black bg-sky-200  p-2 rounded-lg' >usuário</span>
-      </div>
-      <div className='flex float-right flex-row items-center gap-x-4 mb-3'>
-        <span className='text-black bg-emerald-400 max-w-prose overflow-y-scroll p-2 rounded-lg' >usuárioamdlsamdakmslkamsdkmalkdmalskdmalksmlkafmlksmgkrmwomwkqekqwpekqowkqpcmls</span>
-        <img src='https://picsum.photos/200/300' alt="" className='h-10 w-10 rounded-full '/>
-      </div>
-
-    </div>
   )
 }
-
 
 export default Message

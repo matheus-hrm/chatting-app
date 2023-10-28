@@ -15,7 +15,7 @@ const Navbar = () => {
   }
   return (
     <div className="div flex flex-row items-center justify-between pb-2 pr-4 text-white bg-sky-700 border-b-teal-950 border-b-2">
-      <h1 className='p-6 font-semibold text-lg'>
+      <h1 className='p-6 font-semibold text-lg hidden sm:block'>
         Chatting
       </h1>
       <div className='px-4 flex items-center justify-center'>

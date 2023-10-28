@@ -31,7 +31,8 @@ const Chats = () => {
   }
   return (
     <div className='bg-white px-2 h-full'>
-      {chats && Object.entries(chats)?.map((chat) => {
+      {chats && Object.entries(chats)?.sort((a,b)=>b[1].date - a[1].date)
+      .map((chat) => {
         return (
           <div  key={chat[0]} onClick={()=>handleSelect(chat[1].userInfo)} className='flex-row flex justify-start items-center p-4 hover:bg-gray-200 rounded-xl'>
           <img 
@@ -45,7 +46,7 @@ const Chats = () => {
             </span>
 
             <span className='text-neutral-500 text-sm'>
-              {chat[1].userInfo.lastMessage?.text}
+              {chat[1].lastMessage?.text.slice(0, 20) }
             </span>
           </div>
         </div>
